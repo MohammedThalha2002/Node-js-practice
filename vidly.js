@@ -32,6 +32,14 @@ app.post("/api/genere", (req, res) => {
         id: genere.length + 1,
         name: req.body.name
     })
+    res.send(genere)
+})
+
+app.put("api/genere/:id", (req, res) => {
+    // const gene = genere.find(g => g.id == req.params.id)
+    // if (!gene) res.status(404).send("No genere found with the ID")
+    // gene.name = req.body.name
+    res.send(genere)
 })
 
 
