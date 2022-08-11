@@ -28,11 +28,16 @@ app.get('/courses/:id', (req, res) => {
 })
 
 app.post('/postcourses', (req, res) => {
+    const schema = {
+        name : Joi.string().min(3).required()
+    }
+    const result = Joi.valid(req.body, schema)
     const course = {
         id : courses.length + 1,
         name : req.body.name,
     }
-    res.send(course)
+    console.log(result)
+    res.send("hello")
 })
 
 const port = process.env.PORT || 3000
