@@ -35,13 +35,27 @@ app.post("/api/genere", (req, res) => {
     res.send(genere)
 })
 
-app.put("api/genere/:id", (req, res) => {
-    // const gene = genere.find(g => g.id == req.params.id)
-    // if (!gene) res.status(404).send("No genere found with the ID")
-    // gene.name = req.body.name
-    res.send(genere)
+app.put("api/genere/:id", (req,res)=>{
+    const gene = genere.find(g => g.id == req.params.id)
+    if (!gene) res.status(404).send("No genere found with the ID")
+    const index = genere.indexOf(gene)
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    })
+    const { error } = schema.validate(req.body)
+    if (error) res.status(404).send(error.message)
+    genere[index] = req.body
 })
 
+
+app.delete("/api/genere/:id", (req, res) => {
+    const gene = genere.find(g => g.id == req.params.id)
+    if (!gene) res.status(404).send("No genere found with the ID")
+    const index = genere.indexOf(gene)
+    genere.splice(index, 1)
+    console.log("DELETE method is called")
+    res.send(genere)
+})
 
 
 const PORT = process.env.PORT || 3000
